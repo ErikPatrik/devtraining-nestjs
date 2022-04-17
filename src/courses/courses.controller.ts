@@ -1,18 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { create } from 'domain';
+import { CoursesService } from './courses.service';
 
 // 'courses' é o endpoint
 // http://localhost:3000/courses
 @Controller('courses')
 export class CoursesController {
+  constructor(private readonly coursesService: CoursesService) {} // temos aqui todos os métodos para acessar no serviço pra usar no controller
+
   @Get()
   findAll() {
     return 'Listagem de cursos';
@@ -43,5 +48,20 @@ export class CoursesController {
   // Como pegar um atributo individual
   create(@Body('name') body) {
     return body;
+  }
+
+  // Requisições HTTP Update:
+  // Put é enviado todos dados de uma vez, e se o registro não existir, criar o mesmo
+  // Patch atualização de alguns dados, parcialmente, só o nome por exemplo
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body) {
+    // recebe o ID pra buscar, e o body pra atualizar a informação
+    return `Atualização do curso #${id}`;
+  }
+
+  // remover um registro
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `Exclusão do curso ${id}`;
   }
 }
