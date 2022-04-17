@@ -8,6 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 // 'courses' é o endpoint
 // http://localhost:3000/courses
@@ -46,19 +48,22 @@ export class CoursesController {
   //create(@Body() body) {
   // Como pegar um atributo individual
   // create(@Body('name') body)
-  create(@Body() body) {
+  // create(@Body() body)
+  create(@Body() createCourseDto: CreateCourseDto) {
     //return body;
-    return this.coursesService.create(body);
+    return this.coursesService.create(createCourseDto);
   }
 
   // Requisições HTTP Update:
   // Put é enviado todos dados de uma vez, e se o registro não existir, criar o mesmo
   // Patch atualização de alguns dados, parcialmente, só o nome por exemplo
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
+  //update(@Param('id') id: string, @Body() body) {
+  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     // recebe o ID pra buscar, e o body pra atualizar a informação
-    //return `Atualização do curso #${id}`;
-    return this.coursesService.update(id, body);
+    // return `Atualização do curso #${id}`;
+    // return this.coursesService.update(id, body);
+    return this.coursesService.update(id, updateCourseDto);
   }
 
   // remover um registro
