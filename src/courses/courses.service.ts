@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Course } from './entities/course.entity';
 
 @Injectable()
@@ -21,6 +21,21 @@ export class CoursesService {
   // procuramos na estrutura de dados com esse ID passando
   findOne(id: string) {
     // busca dentro do array de Course, onde pra cada id percorrido compara com o ID recebido no parâmetro
+    //return this.courses.find((course: Course) => course.id === Number(id));
+
+    // COM TRATAMENTO DE ERROS
+    const course = this.courses.find(
+      (course: Course) => course.id === Number(id),
+    );
+
+    // se não encontrou
+    if (!course) {
+      throw new HttpException(
+        `Course id ${id} not found`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
     return this.courses.find((course: Course) => course.id === Number(id));
   }
 
