@@ -9,7 +9,7 @@ export class CoursesService {
       id: 1,
       name: 'Fundamentos Nest',
       description: 'Descrição do curso de Nest',
-      tags: ['curso', 'Legal', 'javascript'],
+      tags: ['curso'],
     },
   ];
 

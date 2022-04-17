@@ -3,13 +3,10 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
-import { create } from 'domain';
 import { CoursesService } from './courses.service';
 
 // 'courses' é o endpoint
@@ -20,7 +17,8 @@ export class CoursesController {
 
   @Get()
   findAll() {
-    return 'Listagem de cursos';
+    //return 'Listagem de cursos';
+    return this.coursesService.findAll();
   }
   //Ou
   //findAll(@Res() response) {
@@ -36,18 +34,21 @@ export class CoursesController {
     // Decorando um parâmetro
     @Param('id') id: string,
   ) {
-    return `Curso numero: ${id}  `;
+    //return `Curso numero: ${id}  `;
+    return this.coursesService.findOne(id);
   }
 
   // Dados dp corpo de uma requisição // Post
   // Cadastrando algo por exemplo
   @Post()
-  @HttpCode(HttpStatus.NO_CONTENT) // não retorna conteúdo, caso desejar, muito utilizado quando o retorno é estático
+  //@HttpCode(HttpStatus.NO_CONTENT) // não retorna conteúdo, caso desejar, muito utilizado quando o retorno é estático
   // criação padrão
   //create(@Body() body) {
   // Como pegar um atributo individual
-  create(@Body('name') body) {
-    return body;
+  // create(@Body('name') body)
+  create(@Body() body) {
+    //return body;
+    return this.coursesService.create(body);
   }
 
   // Requisições HTTP Update:
@@ -56,12 +57,14 @@ export class CoursesController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() body) {
     // recebe o ID pra buscar, e o body pra atualizar a informação
-    return `Atualização do curso #${id}`;
+    //return `Atualização do curso #${id}`;
+    return this.coursesService.update(id, body);
   }
 
   // remover um registro
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Exclusão do curso ${id}`;
+    //return `Exclusão do curso ${id}`;
+    return this.coursesService.remove(id);
   }
 }
