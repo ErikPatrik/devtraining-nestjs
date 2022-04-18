@@ -44,6 +44,8 @@ export class CoursesService {
   create(createCourseDto: any) {
     // pegamos o que recebemos no método e colocamos no array
     this.courses.push(createCourseDto);
+    // depois de criado, retornamos o objeto
+    return createCourseDto;
   }
 
   // ATUALIZA
