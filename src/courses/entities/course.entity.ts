@@ -13,6 +13,7 @@ import {
     ManyToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import { Tag } from './tag.entity';
 
 // Aqui vamos usar para criar a entidade com o TypeORM
@@ -32,7 +33,7 @@ export class Course {
 
     // type: pra qual entidade está sendo criado o relacionamento, e o lado inverso, ou seja, la na entidade de tags, precisamos criar uma entidade courses
     @JoinTable() // identifica a relação principal
-    @ManyToMany(() => Tag, (tag) => tag.courses, {
+    @ManyToMany((type) => Tag, (tag: Tag) => tag.courses, {
         cascade: true,
     })
     tags: string[];

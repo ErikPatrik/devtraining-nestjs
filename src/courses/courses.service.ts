@@ -24,12 +24,18 @@ export class CoursesService {
 
     // BUSCA TODOS
     findAll() {
-        return this.courseRepository.find(); // traz todos os registros do banco
+        //return this.courseRepository.find(); // traz todos os registros do banco
+        return this.courseRepository.find({
+            relations: ['tags'],
+        });
     }
 
     // BUSCA UM ÚNICO REGISTRO PELO ID
     findOne(id: string) {
-        const course = this.courseRepository.findOne(id);
+        //const course = this.courseRepository.findOne(id);
+        const course = this.courseRepository.findOne(id, {
+            relations: ['tags'],
+        });
 
         if (!course) {
             throw new NotFoundException(`Course ID ${id} not found`);
@@ -39,7 +45,8 @@ export class CoursesService {
     }
 
     // CRIA
-    async create(createCourseDto: CreateCourseDto) {
+    //async create(createCourseDto: CreateCourseDto) {
+    async create(createCourseDto: any) {
         // antes de criar, verificamos todas as tags enviadas pra criar ou não
         // só retorna se todas as promessas foram concluídas
         // percorre tag por tag, pega o name e executa o método preload..
@@ -48,9 +55,6 @@ export class CoursesService {
             createCourseDto.tags.map((name) => this.preloadTagByName(name)),
         );
 
-        console.log(tags);
-
-        //const course = this.courseRepository.create({createCourseDto});
         const course = this.courseRepository.create({
             ...createCourseDto,
             tags,

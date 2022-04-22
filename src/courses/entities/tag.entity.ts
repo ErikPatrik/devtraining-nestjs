@@ -10,6 +10,6 @@ export class Tag {
     name: string;
 
     // Array de cursos
-    @ManyToMany(() => Course, (course: Course) => course.tags)
+    @ManyToMany(() => Course, (course) => course.tags)
     courses: Course[];
 }
