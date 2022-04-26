@@ -3,7 +3,7 @@ version: "3"
 services:
   app:
     build: .
-    entrypoint: .docker/entrypoint.sh
+    entrypoint: docker/entrypoint.sh
     container_name: cursonestjs-app
     ports:
       - "3000:3000"
