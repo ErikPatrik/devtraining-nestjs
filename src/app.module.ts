@@ -17,8 +17,9 @@ import { CoursesModule } from './courses/courses.module';
             username: 'postgres',
             password: 'docker',
             database: 'cursonestjs', // mudamos o banco para docker
-            autoLoadEntities: true, // carrega automaticamente as entidades
-            synchronize: false, // antes eraa true antes do docker, cria as tabelas no banco de dados automaticamente com o que for definido nas entidades, entretanto
+            entities: [__dirname + '/**/*.entity.js'], //busca as entidades da aplicação, de qualquer nível de subdiretório através do nível atual
+            autoLoadEntities: false, // antes era true, mas queremos indicar aonde vamos buscar informações das entidades, carrega automaticamente as entidades
+            synchronize: false, // antes era true antes do docker, cria as tabelas no banco de dados automaticamente com o que for definido nas entidades, entretanto
             // em produção nao é recomendável, pois pode ser perdido todos os dados caso uma coluna for alterada por exemplo
         }),
     ], // aqui recebe os módulos específicos

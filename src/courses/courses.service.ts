@@ -31,9 +31,9 @@ export class CoursesService {
     }
 
     // BUSCA UM ÚNICO REGISTRO PELO ID
-    findOne(id: string) {
+    async findOne(id: string) {
         //const course = this.courseRepository.findOne(id);
-        const course = this.courseRepository.findOne(id, {
+        const course = await this.courseRepository.findOne(id, {
             relations: ['tags'],
         });
 
@@ -76,7 +76,7 @@ export class CoursesService {
         const course = await this.courseRepository.preload({
             // id: +id, //converte o ID para numérico
             // ...updateCourseDto, // os demais dados
-            id: +id,
+            id: id,
             ...updateCourseDto,
             tags,
         });
